@@ -6,26 +6,10 @@ use App\Models\Job;
 
 
 
-$jobs = [
-    [
-        'id' => 1,
-        'title' => 'Software Engineer',
-        'company' => 'Tech Company',
-    ],
-    [
-        'id' => 2,
-        'title' => 'Data Analyst',
-        'company' => 'Data Corp',
-    ],
-    [
-        'id' => 3,
-        'title' => 'Web Developer',
-        'company' => 'Web Solutions',
-    ]
-];
-
 
 Route::get('/', function () {
+
+    
     return view(
         'home',
         [

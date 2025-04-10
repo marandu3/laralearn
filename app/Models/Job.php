@@ -1,45 +1,27 @@
 <?php
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 
 
 
 
-class Job
+class Job extends Model
 {
-    public static function all(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Software Engineer',
-                'company' => 'Tech Company',
-            ],
-            [
-                'id' => 2,
-                'title' => 'Data Analyst',
-                'company' => 'Data Corp',
-            ],
-            [
-                'id' => 3,
-                'title' => 'Web Developer',
-                'company' => 'Web Solutions',
-            ]
-        ];
+    use HasApiTokens, HasFactory, Notifiable;
+    protected $table='jobs_listings';
 
+    protected $fillable=['title','company'];
+    public function employer(){
+        return $this->belongsTo(Employer::class);
     }
 
-    public static function find(int $id):array
-    {
-        $job = Arr::first(static::all(), fn($job) => $job['id'] == $id);
-
-        if (!$job) {
-            abort(404);
-        }
-        return $job;
+    public function tags(){
+        return $this->belongsToMany(Tag::class, foreignPivotKey: "jobs_listings_id");
     }
 }
-
-
 ?>
